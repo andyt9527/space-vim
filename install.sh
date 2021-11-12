@@ -20,6 +20,8 @@ _vim=
 _neovim=
 _update=
 
+CURRENT_DIR=`pwd`
+
 help() {
   cat << EOF
 usage: $0 [OPTIONS]
@@ -100,7 +102,9 @@ install_plugins() {
 
 generate_dot_spacevim() {
   if [ ! -f "$HOME/.spacevim" ]; then
-    cp "$HOME/.space-vim/init.spacevim" "$HOME/.spacevim"
+    #cp "$HOME/.space-vim/init.spacevim" "$HOME/.spacevim"
+    #ln -sf "$CURRENT_DIR/init.spacevim" "$HOME/.vimrc.bundle"
+    ln -sf "$CURRENT_DIR/init.spacevim" "$HOME/.spacevim"
 
     ret="$?"
     success "Successfully generated .spacevim in your home directory"
@@ -127,7 +131,8 @@ install_for_vim() {
   ret="$?"
   success "Successfully downloaded vim-plug"
 
-  ln -sf "$HOME/.space-vim/init.vim" "$HOME/.vimrc"
+  #ln -sf "$HOME/.space-vim/init.vim" "$HOME/.vimrc"
+  ln -sf "$CURRENT_DIR/init.vim" "$HOME/.vimrc"
   generate_dot_spacevim
 
   install_plugins "vim"
@@ -213,7 +218,7 @@ install() {
 ###############################
 check_git
 
-sync_repo
+#sync_repo
 
 install
 
