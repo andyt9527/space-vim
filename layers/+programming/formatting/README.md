@@ -17,7 +17,7 @@ This layer adds support for formatting the code.
 
 ## Install
 
-To use this configuration layer, add it to your `~/.spacevim`.
+To use this configuration layer, add it to your `~/.vimrc.bundle`.
 
 ## Key Bindings
 

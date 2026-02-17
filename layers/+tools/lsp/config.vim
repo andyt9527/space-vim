@@ -6,7 +6,7 @@ nnoremap <silent> gd :call spacevim#lang#util#Definition()<CR>
 set hidden
 
 function! s:try_show_signature_help() abort
-  let ignore_list = ['vista', 'clap_input', 'nerdtree', 'tagbar', 'fzf', 'gitcommit', 'coc']
+  let ignore_list = ['vista', 'nerdtree', 'tagbar', 'fzf', 'gitcommit', 'coc']
   if index(ignore_list, &filetype) > -1
     return
   endif
@@ -54,64 +54,6 @@ function! s:coc() abort
   " Remap for format selected region
   vmap <localleader>=  <Plug>(coc-format-selected)
   nmap <localleader>=  <Plug>(coc-format-selected)
-endfunction
-
-function! s:lcn() abort
-  let g:LanguageClient_loggingFile = '/tmp/LanguageClient.log'
-  let g:LanguageClient_loggingLevel = 'INFO'
-  let g:LanguageClient_serverStderr = '/tmp/LanguageServer.log'
-  let g:LanguageClient_settingsPath = fnamemodify(resolve(expand('<sfile>:p')),':h').'/settings.json'
-
-  let g:LanguageClient_serverCommands = {
-        \ 'c': ['ccls', '--log-file=/tmp/cq.log'],
-        \ 'cpp': ['ccls', '--log-file=/tmp/cq.log'],
-        \ 'objc': ['ccls'],
-        \ 'go': ['go-langserver', '-gocodecompletion', '-func-snippet-enabled', '-logfile=/tmp/gols.log'],
-        \ 'python': ['pyls', '--log-file=/tmp/pyls.log'],
-        \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-        \ 'sh': ['bash-language-server', 'start'],
-        \ 'typescript': ['javascript-typescript-stdio'],
-        \ 'javascript': ['javascript-typescript-stdio'],
-        \ 'javascript.jsx': ['javascript-typescript-stdio'],
-        \ 'haskell': ['hie-wrapper', '--lsp', '-r', spacevim#util#RootDirectory()],
-        \ }
-
-  let g:LanguageClient_rootMarkers = {
-         \ 'haskell': ['*.cabal', 'stack.yaml']
-         \ }
-
-  let g:LanguageClient_diagnosticsDisplay =
-  \    {
-  \        1: {
-  \            "name": "Error",
-  \            "texthl": "Error",
-  \            "signText": "✖",
-  \            "signTexthl": "ErrorMsg",
-  \            "virtualTexthl": "ErrorMsg",
-  \        },
-  \        2: {
-  \            "name": "Warning",
-  \            "texthl": "Warning",
-  \            "signText": "⚠",
-  \            "signTexthl": "WarningMsg",
-  \            "virtualTexthl": "WarningMsg",
-  \        },
-  \        3: {
-  \            "name": "Information",
-  \            "texthl": "Type",
-  \            "signText": "ℹ",
-  \            "signTexthl": "Type",
-  \            "virtualTexthl": "Type",
-  \        },
-  \        4: {
-  \            "name": "Hint",
-  \            "texthl": "String",
-  \            "signText": "➤",
-  \            "signTexthl": "String",
-  \            "virtualTexthl": "String",
-  \        },
-  \    }
-
 endfunction
 
 " vim-lsp {

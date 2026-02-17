@@ -13,7 +13,7 @@ import re
 import time
 import ast
 
-info_path = os.path.expanduser('~/.space-vim/core/autoload/spacevim/info.vim')
+info_path = os.path.expanduser('../core/autoload/spacevim/info.vim')
 
 topics = dict()
 layers = dict()

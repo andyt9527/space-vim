@@ -1,5 +1,4 @@
-" Comment the following line if you don't want Vim and NeoVim to share the
-" same plugin download directory.
+" Plugin directory configuration
 let g:spacevim_plug_home = '~/.vim/plugged'
 
 " Uncomment the following line to override the leader key. The default value is space key "<\Space>".
@@ -12,7 +11,12 @@ let g:spacevim_plug_home = '~/.vim/plugged'
 " Refer to https://github.com/liuchengxu/space-vim/blob/master/layers/LAYERS.md for all available layers.
 let g:spacevim_layers = [
       \ 'fzf', 'better-defaults', 'which-key',
+      \ 'c-c++', 'python', 'markdown',
+      \ 'lsp', 'syntax-checking',
+      \ 'programming', 'editing',
+      \ 'git', 'file-manager',
       \ ]
+
 
 " Uncomment the following line if your terminal(-emulator) supports true colors.
 " let g:spacevim_enable_true_color = 1
@@ -25,12 +29,14 @@ let g:spacevim_layers = [
 "   Layer 'airline'
 " endif
 
+let g:spacevim_lsp_engine = 'coc'
+
 " Manage your own plugins.
 " Refer to https://github.com/junegunn/vim-plug for more detials.
 function! UserInit()
 
   " Add your own plugin via Plug command.
-  Plug 'junegunn/seoul256.vim'
+  "Plug 'junegunn/seoul256.vim'
 
 endfunction
 
@@ -45,5 +51,10 @@ function! UserConfig()
   " Uncomment the following line If you have installed the powerline fonts.
   " It is good for airline layer.
   " let g:airline_powerline_fonts = 1
+
+  let g:clang_format#code_style = 'llvm'
+
+  " Python 配置
+  let g:python_highlight_all = 1
 
 endfunction

@@ -14,4 +14,4 @@ This layer provides syntax highlighting for docker files.
 
 ## Install
 
-To use this configuration layer, add it to your `~/.spacevim`.
+To use this configuration layer, add it to your `~/.vimrc.bundle`.

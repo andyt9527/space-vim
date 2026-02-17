@@ -17,7 +17,7 @@ This layer adds support for syntax checking.
 
 ## Install
 
-To use this configuration layer, add it to your `~/.spacevim`.
+To use this configuration layer, add it to your `~/.vimrc.bundle`.
 
 ### Dependencies
 

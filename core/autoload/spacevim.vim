@@ -3,7 +3,6 @@ scriptencoding utf-8
 let g:spacevim.info = g:spacevim.base. '/core/autoload/spacevim/info.vim'
 let g:spacevim.layers_base = '/layers'
 let g:spacevim.private_base = '/private'
-let g:spacevim.nvim = has('nvim') && exists('*jobwait') && !g:spacevim.os.windows
 let g:spacevim.vim8 = exists('*job_start')
 let g:spacevim.timer = exists('*timer_start')
 let g:spacevim.gui = has('gui_running')
@@ -14,7 +13,7 @@ let g:spacevim.excluded = []
 let g:spacevim.plugins = []
 
 let s:plug_options = {}
-let s:dot_spacevim = $HOME.'/.spacevim'
+let s:dot_vimrc_bundle = $HOME.'/.vimrc.bundle'
 let s:private_config = g:spacevim.base.'/private/config.vim'
 let s:private_packages = g:spacevim.base.'/private/packages.vim'
 let s:TYPE = {
@@ -30,17 +29,14 @@ function! spacevim#bootstrap() abort
 endfunction
 
 function! spacevim#begin() abort
-  " Download vim-plug if unavailable
-  if !g:spacevim.os.windows
-    call s:check_vim_plug()
-  endif
+  call s:check_vim_plug()
   call s:define_command()
   call s:cache()
-  call s:check_dot_spacevim()
+  call s:check_dot_vimrc_bundle()
 endfunction
 
 function! s:check_vim_plug() abort
-  let l:plug_path = g:spacevim.nvim ? '~/.local/share/nvim/site/autoload/plug.vim' : '~/.vim/autoload/plug.vim'
+  let l:plug_path = '~/.vim/autoload/plug.vim'
   if empty(glob(l:plug_path)) | call spacevim#vim#plug#download(l:plug_path) | endif
 endfunction
 
@@ -53,21 +49,21 @@ function! s:define_command() abort
   command! -nargs=0 -bar LayerStatus call spacevim#layer#status()
 endfunction
 
-function! s:check_dot_spacevim() abort
-  if filereadable(expand(s:dot_spacevim))
-    call s:Source(s:dot_spacevim)
+function! s:check_dot_vimrc_bundle() abort
+  if filereadable(expand(s:dot_vimrc_bundle))
+    call s:Source(s:dot_vimrc_bundle)
     call extend(g:spacevim.loaded, get(g:, 'spacevim_layers', []))
     let g:mapleader = get(g:, 'spacevim_leader', "\<Space>")
     let g:maplocalleader = get(g:, 'spacevim_localleader', ',')
   else
-    call spacevim#util#err('.spacevim does not exist! Exiting...')
+    call spacevim#util#err('.vimrc.bundle does not exist! Exiting...')
   endif
 endfunction
 
 function! s:cache() abort
   let l:info = g:spacevim.info
   if filereadable(l:info)
-    execute 'source ' . (g:spacevim.os.windows ? s:path(l:info) : l:info)
+    execute 'source ' . l:info
   else
     call spacevim#cache#init()
   endif
@@ -130,10 +126,6 @@ function! s:Source(file) abort
   endtry
 endfunction
 
-function! s:path(path) abort
-  return substitute(a:path, '/', '\', 'g')
-endfunction
-
 function! spacevim#end() abort
   " Backward compatibility
   if exists('*Layers') | call Layers() | endif
@@ -154,8 +146,7 @@ endfunction
 " Initialize vim-plug system
 function! s:register_plugin() abort
   " https://github.com/junegunn/vim-plug/issues/559
-  call plug#begin(get(g:, 'spacevim_plug_home',
-        \ g:spacevim.nvim ? '~/.local/share/nvim/plugged' : '~/.vim/plugged/'))
+  call plug#begin(get(g:, 'spacevim_plug_home', '~/.vim/plugged/'))
   call s:packages()
   " Register non-excluded plugins
   function! s:filter_and_register(val) abort
@@ -210,7 +201,7 @@ endfunction
 function! s:spacevim_helptags() abort
   let helptag_file = g:spacevim.base . '/core/doc/spacevim.txt'
   let helptag_time = getftime(helptag_file)
-  let helptag_lastrun_file = g:spacevim.base . '/core/doc/.spacevim_last_helptags_run'
+  let helptag_lastrun_file = g:spacevim.base . '/core/doc/.vimrc_bundle_last_helptags_run'
   let helptag_lastrun_time = filereadable(helptag_lastrun_file) ? readfile(helptag_lastrun_file) : []
   if (len(helptag_lastrun_time) != 1) || (helptag_lastrun_time[0] != helptag_time)
     try

@@ -15,13 +15,13 @@ This layer adds support the markdown language.
 
 ## Install
 
-To use this configuration layer, add it to your `~/.spacevim`.
+To use this configuration layer, add it to your `~/.vimrc.bundle`.
 
 ## Key Bindings
 
 Key Binding      | Mode   | Description
 :---:            | :---:  | :---:
-<kbd>, c p</kbd> | Normal | markdown preview (require chrome in linux and windows ,require safari in MacOS)
+<kbd>, c p</kbd> | Normal | markdown preview (require chrome in Linux, require safari in macOS)
 <kbd>, c t</kbd> | Normal | Generate Toc
 <kbd>, c s</kbd> | Normal | Show Toc sidebar
 <kbd>, 1</kbd>   | Normal | heading level 1

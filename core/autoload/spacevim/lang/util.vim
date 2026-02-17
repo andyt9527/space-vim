@@ -1,4 +1,4 @@
-let s:engine = g:spacevim_lsp_engine
+let s:engine = get(g:, 'spacevim_lsp_engine', 'coc')
 
 " Infer executable from the first line
 function! spacevim#lang#util#InferExecutable() abort
@@ -12,35 +12,34 @@ function! spacevim#lang#util#InferExecutable() abort
   return executable(l:exe) ? l:exe : ''
 endfunction
 
-" coc or LCN
-function! s:dispatch(...) abort
-  if a:0 == 2
-    if s:engine == 'coc'
-      let cmd = printf('call CocAction("%s")', a:1)
-    elseif s:engine == 'lcn'
-      let cmd = printf('call LanguageClient#%s()', a:2)
-    else
-      call spacevim#util#err('Unknown LSP engine')
-      return
-    endif
-
+" coc or vim_lsp
+function! s:dispatch(action, ...) abort
+  if s:engine == 'coc'
+    let cmd = printf('call CocAction("%s")', a:action)
     execute cmd
   endif
+  " vim_lsp uses <plug> mappings, handled separately
 endfunction
 
 " ================================================
 " LSP
 " ================================================
 function! spacevim#lang#util#FindReferences() abort
-  call s:dispatch('jumpReferences', 'textDocument_references')
+  if s:engine == 'coc'
+    call CocAction('jumpReferences')
+  endif
 endfunction
 
 function! spacevim#lang#util#Hover() abort
-  call s:dispatch('doHover', 'LanguageClient#textDocument_hover')
+  if s:engine == 'coc'
+    call CocAction('doHover')
+  endif
 endfunction
 
 function! spacevim#lang#util#Rename() abort
-  call s:dispatch('rename', 'textDocument_rename')
+  if s:engine == 'coc'
+    call CocAction('rename')
+  endif
 endfunction
 
 function! s:DocumentSymbolsCb(error, response) abort
@@ -60,14 +59,13 @@ function! spacevim#lang#util#DocumentSymbol() abort
   if s:engine == 'coc'
     call CocActionAsync('documentSymbols', function('s:DocumentSymbolsCb'))
     let s:old_pos_on_request = getpos('.')
-  else
-    call LanguageClient#textDocument_documentSymbol()
   endif
-  " call s:dispatch('documentSymbols', 'textDocument_documentSymbol')
 endfunction
 
 function! spacevim#lang#util#WorkspaceSymbol() abort
-  call s:dispatch('workspaceSymbols', 'workspace_symbol')
+  if s:engine == 'coc'
+    call CocAction('workspaceSymbols')
+  endif
 endfunction
 
 function! spacevim#lang#util#Format() abort
@@ -75,8 +73,6 @@ function! spacevim#lang#util#Format() abort
     call CocActionAsync('format')
   elseif exists(':RustFmt')
     RustFmt
-  elseif exists('*LanguageClient#textDocument_formatting')
-    call LanguageClient#textDocument_formatting()
   elseif exists(':Autoformat')
     Autoformat
   elseif exists(':ALEFix')
@@ -87,9 +83,7 @@ endfunction
 function! spacevim#lang#util#CodeAction() abort
   if s:engine == 'coc'
     call CocAction('codeLensAction')
-    return
   endif
-  call LanguageClient#textDocument_codeAction()
 endfunction
 
 function! spacevim#lang#util#DiagnosticPrevious(type) abort
@@ -97,7 +91,6 @@ function! spacevim#lang#util#DiagnosticPrevious(type) abort
     call CocAction('diagnosticPrevious')
     return
   endif
-
   ALEPreviousWrap
 endfunction
 
@@ -105,7 +98,6 @@ function! spacevim#lang#util#DiagnosticNext() abort
   if s:engine == 'coc'
     call CocAction('diagnosticNext')
   endif
-
   ALENextWrap
 endfunction
 
@@ -131,30 +123,17 @@ function! spacevim#lang#util#Definition() abort
   if s:engine == 'coc'
     call CocActionAsync('jumpDefinition', function('s:DefinitionCb'))
     let s:old_pos_on_request = getpos('.')
-    return
-  endif
-
-  function! s:GotoDefinitionHandler(output) abort
-    let output = a:output
-    if has_key(output, 'error')
-      echom "ERROR"
-    elseif (has_key(output, 'result') && empty(output['result']))
-      echom "Not found!"
-    endif
-  endfunction
-
-  if LanguageClient#serverStatus() == 1
-    call spacevim#vim#cursor#TruncatedEcho('Language Server is busy now, please try again later.')
-  else
-    " https://github.com/autozimu/LanguageClient-neovim/issues/560
-    call LanguageClient#textDocument_definition({'handle': v:true}, function('s:GotoDefinitionHandler'))
   endif
 endfunction
 
 function! spacevim#lang#util#TypeDefinition() abort
-  call s:dispatch('jumpTypeDefinition', 'textDocument_typeDefinition')
+  if s:engine == 'coc'
+    call CocAction('jumpTypeDefinition')
+  endif
 endfunction
 
 function! spacevim#lang#util#Implementation() abort
-  call s:dispatch('jumpImplementation', 'textDocument_implementation')
+  if s:engine == 'coc'
+    call CocAction('jumpImplementation')
+  endif
 endfunction

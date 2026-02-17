@@ -32,10 +32,6 @@ function! s:fuzzy_callback.on_exit_impl() abort
   endtry
 endfunction
 
-function! s:fuzzy_callback.on_exit(_job_id, _data, _event) abort
-  call s:fuzzy_callback.on_exit_impl()
-endfunction
-
 function! s:fuzzy_callback.exit_cb(_job, _status) abort
   call s:fuzzy_callback.on_exit_impl()
 endfunction
@@ -45,15 +41,11 @@ function! s:fuzzy_finder(term_cmd) abort
 
   call spacevim#util#TryFloatingOr()
 
-  if exists('*term_start')
-    let opts = {
-          \ 'curwin': 1,
-          \ 'exit_cb': s:fuzzy_callback.exit_cb,
-          \ }
-    call term_start([&shell, &shellcmdflag, a:term_cmd], opts)
-  elseif exists('*termopen')
-    call termopen(a:term_cmd, s:fuzzy_callback)
-  endif
+  let opts = {
+        \ 'curwin': 1,
+        \ 'exit_cb': s:fuzzy_callback.exit_cb,
+        \ }
+  call term_start([&shell, &shellcmdflag, a:term_cmd], opts)
 
   setlocal nospell bufhidden=wipe nobuflisted nonumber norelativenumber
   startinsert
@@ -73,18 +65,6 @@ function! spacevim#plug#fuzzy_finder#fzy.rg() abort
   let term_cmd = choice_cmd . ' | fzy --lines=100 --prompt='.prompt.' > ' .  s:fuzzy_callback.filename
 
   call s:fuzzy_finder(term_cmd)
-
-  if has('nvim')
-    syntax match SpaceLinNr /^.*:\zs\d\+\ze:\d\+:/hs=s+1,he=e-1
-    syntax match SpaceColumn /:\d\+:\zs\d\+\ze:/ contains=SpaceLinNr
-    syntax match SpaceLinNrColumn /\zs:\d\+:\d\+:\ze/ contains=SpaceLinNr,SpaceColumn
-    syntax match SpaceFpath /^.*:\d\+:\d\+:/ contains=SpaceLinNrColumn
-
-    highlight default link SpaceFpath       Keyword
-    highlight default link SpaceLinNr       LineNr
-    highlight default link SpaceColumn      Comment
-    highlight default link SpaceLinNrColumn Type
-  endif
 endfunction
 
 function! spacevim#plug#fuzzy_finder#fzy.rg_files() abort

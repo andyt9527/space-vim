@@ -1,8 +1,5 @@
 let s:termbufs = get(s:, 'termbufs', [])
 
-let s:closed = []
-let s:jobs = {}
-
 " terminal buffer is async inherently.
 " opts: dict, {'cmd':, 'cwd':}
 function! spacevim#vim#term#Open(opts) abort
@@ -10,30 +7,13 @@ function! spacevim#vim#term#Open(opts) abort
   " close terminal buffer whose job has finished
   let winrestcmd = winrestcmd()
 
-  if has('nvim')
-    let index = 0
-    while index < len(s:closed)
-      let item = s:closed[index]
-
-      if has_key(s:jobs, item)
-        let bufnr = s:jobs[item]
-        if bufloaded(bufnr)
-          silent execute bufnr . 'bwipeout!'
-          unlet s:jobs[item]
-        endif
-      endif
-
-      unlet s:closed[index]
-    endwhile
-  else
-    for termbuf in s:termbufs
-      if index(term_list(), termbuf) isnot# -1
-            \ && bufloaded(termbuf)
-            \ && job_status(term_getjob(termbuf)) ==# 'dead'
-        silent execute termbuf . 'bwipeout!'
-      endif
-    endfor
-  endif
+  for termbuf in s:termbufs
+    if index(term_list(), termbuf) isnot# -1
+          \ && bufloaded(termbuf)
+          \ && job_status(term_getjob(termbuf)) ==# 'dead'
+      silent execute termbuf . 'bwipeout!'
+    endif
+  endfor
 
   execute winrestcmd
 
@@ -63,20 +43,11 @@ function! spacevim#vim#term#Open(opts) abort
 
   let cwd = get(a:opts, 'cwd', getcwd())
 
-  if has('nvim')
-    let bufnr = bufnr('%')
-    let s:jobid = termopen(cmd, {
-          \ 'cwd': cwd,
-          \ 'on_exit': { c,d,n -> add(s:closed, s:jobid) },
-          \})
-    let s:jobs[s:jobid] = bufnr
-  else
-    execute 'lcd' cwd
-    let bufnr = term_start(cmd, {
-          \ 'curwin': 1,
-          \})
-    call add(s:termbufs, bufnr)
-  endif
+  execute 'lcd' cwd
+  let bufnr = term_start(cmd, {
+        \ 'curwin': 1,
+        \})
+  call add(s:termbufs, bufnr)
 
   nnoremap <silent> q :q<CR>
 

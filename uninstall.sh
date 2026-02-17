@@ -14,8 +14,7 @@ confirm() {
 
 uninstall() {
   rm -f "$HOME/.vimrc"
-  rm -f "$HOME/.config/nvim/init.vim"
-  rm -f "$HOME/.spacevim"
+  rm -f "$HOME/.vimrc.bundle"
   rm -rf "$HOME/.space-vim"
 }
 

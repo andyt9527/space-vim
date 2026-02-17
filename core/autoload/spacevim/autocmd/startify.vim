@@ -1,13 +1,6 @@
 scriptencoding utf-8
 
-function! s:get_nvim_version()
-    redir => l:s
-    silent! version
-    redir END
-    return matchstr(l:s, 'NVIM v\zs[^\n]*')
-endfunction
-
-let s:version = g:spacevim.nvim ? 'nvim '.s:get_nvim_version() : 'vim '.v:version
+let s:version = 'vim '.v:version
 let s:custom_header = [
             \'                                             _',
             \'         ___ _ __   __ _  ___ ___     __   _(_)_ __ ___',

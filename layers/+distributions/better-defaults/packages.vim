@@ -43,16 +43,14 @@ if has('patch-8.0.1238')
   MP 'osyo-manga/vim-anzu', { 'on': ['<Plug>(anzu-n-with-echo)', '<Plug>(anzu-N-with-echo)'] }
 else
   MP 'google/vim-searchindex'
-  if !g:spacevim.nvim
-    MP 'haya14busa/incsearch.vim',       { 'on': [
-                \ '<Plug>(incsearch-forward)',
-                \ '<Plug>(incsearch-backward)',
-                \ '<Plug>(incsearch-stay)' ]
-                \ }
-    MP 'haya14busa/incsearch-fuzzy.vim',  { 'on': [
-                \ '<Plug>(incsearch-fuzzy-/)',
-                \ '<Plug>(incsearch-fuzzy-?)',
-                \ '<Plug>(incsearch-fuzzy-stay)' ]
-                \ }
-  endif
+  MP 'haya14busa/incsearch.vim',       { 'on': [
+              \ '<Plug>(incsearch-forward)',
+              \ '<Plug>(incsearch-backward)',
+              \ '<Plug>(incsearch-stay)' ]
+              \ }
+  MP 'haya14busa/incsearch-fuzzy.vim',  { 'on': [
+              \ '<Plug>(incsearch-fuzzy-/)',
+              \ '<Plug>(incsearch-fuzzy-?)',
+              \ '<Plug>(incsearch-fuzzy-stay)' ]
+              \ }
 endif

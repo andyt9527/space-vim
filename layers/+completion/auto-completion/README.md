@@ -14,11 +14,11 @@
 
 This layer adds support for auto-completion.
 
-If you want a more powerful completion engine, please enable another layer `ycmd`.
+If you want a more powerful completion engine, please enable the `lsp` layer.
 
 ## Install
 
-To use this configuration layer, add it to your `~/.spacevim`.
+To use this configuration layer, add it to your `~/.vimrc.bundle`.
 
 ## Related Projects
 

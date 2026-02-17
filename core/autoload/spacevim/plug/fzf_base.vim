@@ -2,7 +2,7 @@
 " ------------------------------------------------------------------
 " Common
 " ------------------------------------------------------------------
-let s:is_win = has('win32') || has('win64')
+" Windows support removed - Unix only
 let s:layout_keys = ['window', 'up', 'down', 'left', 'right']
 let s:TYPE = {'dict': type({}), 'funcref': type(function('call')), 'string': type(''), 'list': type([])}
 
@@ -62,8 +62,7 @@ function! s:chomp(str)
 endfunction
 
 function! s:escape(path)
-  let path = fnameescape(a:path)
-  return s:is_win ? escape(path, '$') : path
+  return fnameescape(a:path)
 endfunction
 
 if v:version >= 704

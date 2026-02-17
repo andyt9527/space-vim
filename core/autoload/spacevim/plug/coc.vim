@@ -4,9 +4,7 @@ function! spacevim#plug#coc#Init(_timer) abort
   " So disable it now.
   " autocmd CursorMoved * if &previewwindow != 1 | pclose | endif
 
-  if !g:spacevim.nvim
-    call coc#rpc#start_server()
-  endif
+  call coc#rpc#start_server()
 
   " Don't know why coc.nvim doesn't work until I do the autocmd CocNvimInit explicitly
   if exists('#User#CocNvimInit')

@@ -31,7 +31,7 @@ endfunction
 
 " 500
 function! spacevim#defer#defaults(timer) abort
-  if has('patch-8.0.1206') || has('nvim-0.2.3')
+  if has('patch-8.0.1206')
     call s:lod('traces.vim')
   endif
   call s:lod('vim_current_word', 'vim-signature', 'vim-rsi')
@@ -57,25 +57,8 @@ function! spacevim#defer#vimspector(timer) abort
   call s:lod('vimspector')
 endfunction
 
-" 1000
-function! spacevim#defer#ycm(timer) abort
-  call s:lod('YouCompleteMe')
-endfunction
-
-function! spacevim#defer#unite(timer) abort
-  call s:lod('unite.vim')
-endfunction
-
 function! spacevim#defer#markdown(timer) abort
   call s:lod('vim-markdown')
-endfunction
-
-function! spacevim#defer#rust(timer) abort
-  call s:lod('rust.vim')
-endfunction
-
-function! spacevim#defer#go(timer) abort
-   call s:lod('vim-go')
 endfunction
 
 function! spacevim#defer#python(timer) abort

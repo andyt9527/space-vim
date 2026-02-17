@@ -1,5 +1,5 @@
 function! spacevim#github#CommitRef() abort
-  let root_dir = clap#path#find_project_root(bufnr(''))
+  let root_dir = spacevim#util#RootDirectory()
 
   " Not a git repo
   if empty(root_dir)
@@ -9,22 +9,19 @@ function! spacevim#github#CommitRef() abort
   let abs_path = expand('%:p')
 
   if abs_path =~ '^'.root_dir
-    " /autoload/clap/rooter.vim
     let relative_path = abs_path[strlen(root_dir):]
   else
     echoerr 'abs_path:'.abs_path.', root_dir:'.root_dir.' mismatches.'
     return
   endif
 
-  " https://github.com/liuchengxu/vim-clap/blob/d8ff7dc8b41e3be15810718163202df0c1122405/crates/fuzzy_filter/src/lib.rs#L59
   let output = systemlist('git remote -v')
   let origin = filter(output, 'v:val =~ "^origin"')
   if empty(origin)
-    echoerr 'On origin remote info'
+    echoerr 'No origin remote info'
     return
   endif
 
-  " https://github.com/liuchengxu/vim-clap{.git}
   let remote_url = split(origin[0])[1]
 
   if remote_url =~# '.git$'

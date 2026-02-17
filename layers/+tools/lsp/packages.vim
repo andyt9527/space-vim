@@ -17,13 +17,7 @@ function! s:vim_lsp() abort
   endif
 endfunction
 
-function! s:lcn() abort
-  MP 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': function('spacevim#VimPlugPostUpdateHook', [v:false, 'bash install.sh']),
-    \ }
-endfunction
-
-let g:spacevim_lsp_engine = get(g:, 'spacevim_lsp_engine', 'lcn')
+" Default to coc.nvim, can be overridden to use vim_lsp
+let g:spacevim_lsp_engine = get(g:, 'spacevim_lsp_engine', 'coc')
 
 call s:{g:spacevim_lsp_engine}()

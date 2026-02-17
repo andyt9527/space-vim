@@ -169,7 +169,7 @@ let s:leader_map['t'] = {
       \ 'g' : ['spacevim#plug#toggle#Git()'         , 'git-status-indicator']   ,
       \ 'i' : ['IndentGuidesToggle'                 , 'indent-guide']           ,
       \ 'p' : ['setlocal paste!'                    , 'paste-mode']             ,
-      \ 's' : ['SyntasticToggleMode'                , 'syntastic']              ,
+      \ 's' : ['ALEToggle'                            , 'ale-syntax-check']       ,
       \ 'b' : ['spacevim#map#manager#BufTags()'     , 'tags-in-current-buffer'] ,
       \ 'T' : ['spacevim#plug#toggle#SidebarTags()' , 'tags-sidebar']           ,
       \ 'c' : ['spacevim#vim#toggle#CursorColumn()' , 'cursor-column']          ,

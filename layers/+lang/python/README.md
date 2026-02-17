@@ -23,13 +23,13 @@ This layer adds support for the Python language.
 
 ### Layer
 
-To use this configuration layer, add it to your `~/.spacevim`.
+To use this configuration layer, add it to your `~/.vimrc.bundle`.
 
 ### Dependencies
 
 #### Auto-completion
 
-With `auto-completion`, `deoplete` or `ycmd` layer enabled.
+With `auto-completion` or `lsp` layer enabled.
 
 #### Syntax checking
 

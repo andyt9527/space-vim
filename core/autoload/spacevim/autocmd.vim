@@ -17,9 +17,5 @@ function! spacevim#autocmd#GUIEnter() abort
   noremap + :Bigger<CR>
   noremap - :Smaller<CR>
 
-  if g:spacevim.os.windows && empty(&guifont)
-    let &guifont = 'Consolas:h13'
-  endif
-
   nnoremap <Leader>wm :call spacevim#vim#gui#ToggleFullScreen()<CR>
 endfunction

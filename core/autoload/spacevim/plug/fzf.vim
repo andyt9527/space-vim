@@ -1,4 +1,4 @@
-let s:has_floating_win = exists('*nvim_open_win')
+" Floating window support removed (Neovim only)
 let g:fzf_layout = get(g:, 'fzf_layout', {'down': '~40%'})
 
 function! s:fzf(name, opts, extra)

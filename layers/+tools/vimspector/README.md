@@ -15,7 +15,7 @@ This layer adds the Vimspector tool.
 
 ## Install
 
-To use this layer, add it to your `.spacevim`.
+To use this layer, add it to your `.vimrc.bundle`.
 
 ## Key Bindings
 

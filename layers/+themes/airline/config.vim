@@ -33,9 +33,7 @@ scriptencoding=utf-8
      if !exists('g:airline_powerline_fonts')
        let g:airline_left_sep=''
        let g:airline_right_sep=''
-       if !g:spacevim.os.windows
-         let g:airline_symbols = g:spacevim#plug#airline#symbols
-       endif
+       let g:airline_symbols = g:spacevim#plug#airline#symbols
      endif
   endfunction
 " }

@@ -22,13 +22,7 @@ endfunction
 
 " http://vim.wikia.com/wiki/Restore_screen_size_and_position
 function! s:screen_filename()
-  if has('amiga')
-    return "s:.vimsize"
-  elseif has('win32')
-    return $HOME.'\_vimsize'
-  else
-    return $HOME.'/.vimsize'
-  endif
+  return $HOME.'/.vimsize'
 endfunction
 
 function! spacevim#vim#gui#ScreenRestore()

@@ -24,17 +24,6 @@ augroup END
   nmap <F21> <Plug>MoveLineUp
   nmap <F22> <Plug>MoveCharLeft
   nmap <F23> <Plug>MoveCharRight
-  if g:spacevim.nvim
-    vmap <M-j> <Plug>MoveBlockDown
-    vmap <M-k> <Plug>MoveBlockUp
-    vmap <M-h> <Plug>MoveCharLeft
-    vmap <M-l> <Plug>MoveCharRight
-
-    nmap <M-j> <Plug>MoveLineDown
-    nmap <M-k> <Plug>MoveLineUp
-    nmap <M-h> <Plug>MoveCharLeft
-    nmap <M-l> <Plug>MoveCharRight
-  endif
 " }
 
 " rainbow {
@@ -70,6 +59,18 @@ augroup END
   nnoremap <F6> :TagbarToggle<CR>
   inoremap <F6> <ESC>:TagbarToggle<CR>
   nnoremap <Leader>tt :TagbarToggle<CR>
+
+  " Auto-detect ctags executable (Universal Ctags or Exuberant Ctags)
+  " BSD ctags (macOS default) will NOT work
+  if executable('uctags')
+    let g:tagbar_ctags_bin = 'uctags'
+  elseif executable('ctags-exuberant')
+    let g:tagbar_ctags_bin = 'ctags-exuberant'
+  elseif executable('/opt/homebrew/bin/ctags')
+    let g:tagbar_ctags_bin = '/opt/homebrew/bin/ctags'
+  elseif executable('/usr/local/bin/ctags')
+    let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+  endif
 " }
 
 " asyncrun.vim {

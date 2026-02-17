@@ -1,42 +1,37 @@
 " ----------------------------------------------
-" fzf or leaderf
+" fzf wrapper functions
 " ----------------------------------------------
-function! s:dispatch(...) abort
+function! s:ensure_fzf() abort
   if !exists('g:loaded_fzf')
     call plug#load('fzf', 'fzf.vim')
-  endif
-  if a:0 == 2
-    " FIXME better configurable
-    let prefer_fzf = 1
-    let cmd = prefer_fzf ? a:1 : a:2
-    execute cmd
-  elseif a:0 == 1
-    execute a:1
   endif
 endfunction
 
 function! spacevim#wrap#fzf#File() abort
-  call s:dispatch('Files', 'LeaderfFile')
+  call s:ensure_fzf()
+  Files
 endfunction
 
 function! spacevim#wrap#fzf#Buffers() abort
-  " Use custom Buffers
-  call s:dispatch('call spacevim#plug#fzf_base#buffers()', 'LeaderfBuffer')
+  call s:ensure_fzf()
+  call spacevim#plug#fzf_base#buffers()
 endfunction
 
 function! spacevim#wrap#fzf#BLines() abort
-  call s:dispatch('BLines', 'LeaderfLine')
+  call s:ensure_fzf()
+  BLines
 endfunction
 
 function! spacevim#wrap#fzf#BLinesAll() abort
-  call s:dispatch('Lines', 'LeaderfLineAll')
+  call s:ensure_fzf()
+  Lines
 endfunction
 
 function! spacevim#wrap#fzf#Files() abort
-  call s:dispatch('Files ~', 'LeaderfFile ~')
+  call s:ensure_fzf()
+  Files ~
 endfunction
 
-" nnoremap <LocalLeader>fc :call spacevim#plug#fzf#FZFCmd()<CR>
 function! spacevim#wrap#fzf#Rtp() abort
   call spacevim#plug#fzf#Rtp()
 endfunction

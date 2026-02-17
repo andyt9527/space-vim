@@ -18,17 +18,17 @@ This layer adds support for code snippets.
 
 ## Install
 
-To use this configuration layer, add it to your `~/.spacevim`.
+To use this configuration layer, add it to your `~/.vimrc.bundle`.
 
 ## Usage
 
-Better to use with completion layer together, e.g., `auto-completion` and `ycmd`.
+Better to use with completion layer together, e.g., `auto-completion` or `lsp`.
 
 ### Snippet Expand Trigger
 
-If no completion plugin or `ycmd` is enabled, the snippet expand trigger is `<C-e>`.
+If no completion plugin is enabled, the snippet expand trigger is `<C-e>`.
 
-When `ncm2` is avalible, the snippet expand trigger is `<CR>`.
+When `ncm2` is available, the snippet expand trigger is `<CR>`.
 
 Check it via `:echo g:UltiSnipsExpandTrigger`.
 
